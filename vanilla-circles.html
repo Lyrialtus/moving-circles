@@ -52,24 +52,24 @@
       }
     }
     body.innerHTML += divs
-    const halfCircle = body.querySelector('.circle').clientWidth / 2
+    const circleRadius = body.querySelector('.circle').clientWidth / 2
 
     window.addEventListener('mousemove', (event) => {
       try {
-        body.querySelectorAll('.circle').forEach((element) => {
-          const x0 = +element.dataset.x + halfCircle
-          const y0 = +element.dataset.y + halfCircle
+        body.querySelectorAll('.circle').forEach((circle) => {
+          const x0 = +circle.dataset.x + circleRadius
+          const y0 = +circle.dataset.y + circleRadius
           const dx = event.clientX - x0
           const dy = event.clientY - y0
-          element.classList.remove('transition')
+          circle.classList.remove('transition')
 
-          if ((dx ** 2 + dy ** 2) ** 0.5 < halfCircle * 2) {
-            element.style.left = x0 - dx - halfCircle + 'px'
-            element.style.top = y0 - dy - halfCircle + 'px'
+          if ((dx ** 2 + dy ** 2) ** 0.5 < circleRadius * 2) {
+            circle.style.left = x0 - dx - circleRadius + 'px'
+            circle.style.top = y0 - dy - circleRadius + 'px'
           } else {
-            element.classList.add('transition')
-            element.style.left = x0 - halfCircle + 'px'
-            element.style.top = y0 - halfCircle + 'px'
+            circle.classList.add('transition')
+            circle.style.left = x0 - circleRadius + 'px'
+            circle.style.top = y0 - circleRadius + 'px'
           }
         })
       } catch (error) {
