@@ -46,9 +46,9 @@
     for (let x = 0; x < body.clientWidth; x += 60) {
       for (let y = 0; y < body.clientHeight; y += 60) {
         divs += `<div class="circle-shadow" data-x="${x}" data-y="${y}"
-        style="top:${y}px; left:${x}px"></div>
+        style="top: ${y}px; left: ${x}px"></div>
         <div class="circle" data-x="${x}" data-y="${y}"
-        style="top:${y}px; left:${x}px"></div>`
+        style="top: ${y}px; left: ${x}px"></div>`
       }
     }
     body.innerHTML += divs
