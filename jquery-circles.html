@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Moving jQuery circles</title>
+</head>
+
+<body>
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: #efefef;
+    }
+
+    .circle {
+      background: #444;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 100px;
+    }
+
+    .circle-shadow {
+      background: #ddd;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 100px;
+    }
+
+    .transition {
+      transition: all .3s;
+    }
+  </style>
+
+  <script src="https://code.jquery.com/jquery-2.2.4.min.js"
+    integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+    crossorigin="anonymous"
+  ></script>
+  <script>
+    var divs = "";
+    for (var x = 0; x < $("body").width(); x += 60) {
+      for (var y = 0; y < $("body").height(); y += 60) {
+        divs += "<div class='circle-shadow' data-x='" + x + "' data-y='" + y +
+        "' style='top:" + y + "px; left:" + x + "px'></div>";
+        divs += "<div class='circle' data-x='" + x + "' data-y='" + y +
+        "' style='top:" + y + "px; left:" + x + "px'></div>";
+      }
+    }
+    $("body").append(divs);
+    var halfCircle = $(".circle:eq(0)").width() / 2;
+
+    $(window).on("mousemove", function(event) {
+      try {
+        $(".circle").each(function() {
+          var x0 = +$(this).data("x") + halfCircle;
+          var y0 = +$(this).data("y") + halfCircle;
+          var dx = event.clientX - x0;
+          var dy = event.clientY - y0;
+          $(this).removeClass("transition");
+
+          Math.sqrt(dx * dx + dy * dy) < halfCircle * 2 ? (
+            $(this).css({
+              left: x0 - dx - halfCircle + "px",
+              top: y0 - dy - halfCircle + "px"
+            })
+          ) : (
+            $(this).addClass("transition").css({
+              left: x0 - halfCircle + "px",
+              top: y0 - halfCircle + "px"
+            })
+          );
+        });
+      } catch (error) {
+        alert(error);
+      }
+    });
+  </script>
+</body>
+
+</html>

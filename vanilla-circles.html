@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Moving vanilla circles</title>
+</head>
+
+<body>
+  <style>
+    html,
+    body {
+      overflow: hidden;
+      width: 100%;
+      height: 100%;
+    }
+
+    body {
+      background: #efefef;
+    }
+
+    .circle {
+      background: #444;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 100px;
+    }
+
+    .circle-shadow {
+      background: #ddd;
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      border-radius: 100px;
+    }
+
+    .transition {
+      transition: all .3s;
+    }
+  </style>
+
+  <script>
+    const body = document.body
+    let divs = ''
+    for (let x = 0; x < body.clientWidth; x += 60) {
+      for (let y = 0; y < body.clientHeight; y += 60) {
+        divs += `<div class="circle-shadow" data-x="${x}" data-y="${y}"
+        style="top:${y}px; left:${x}px"></div>
+        <div class="circle" data-x="${x}" data-y="${y}"
+        style="top:${y}px; left:${x}px"></div>`
+      }
+    }
+    body.innerHTML += divs
+    const halfCircle = body.querySelector('.circle').clientWidth / 2
+
+    window.addEventListener('mousemove', (event) => {
+      try {
+        body.querySelectorAll('.circle').forEach((element) => {
+          const x0 = +element.dataset.x + halfCircle
+          const y0 = +element.dataset.y + halfCircle
+          const dx = event.clientX - x0
+          const dy = event.clientY - y0
+          element.classList.remove('transition')
+
+          if ((dx ** 2 + dy ** 2) ** 0.5 < halfCircle * 2) {
+            element.style.left = x0 - dx - halfCircle + 'px'
+            element.style.top = y0 - dy - halfCircle + 'px'
+          } else {
+            element.classList.add('transition')
+            element.style.left = x0 - halfCircle + 'px'
+            element.style.top = y0 - halfCircle + 'px'
+          }
+        })
+      } catch (error) {
+        console.log(error)
+      }
+    })
+  </script>
+</body>
+
+</html>
